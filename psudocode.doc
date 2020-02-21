@@ -1,0 +1,12 @@
+1. Create a timer
+2. load question on the page
+3. load answer choices on the page
+4. start timer down
+5. return the user answer
+6. compare the answer to the quesntion answer
+7. if same - increase win and move to next question
+8. if not - increase loss and move to next question
+9. if timer runs out move to next question
+10. rest timer
+11. display next quetion and repeat
+12. after answering the last question display game results 

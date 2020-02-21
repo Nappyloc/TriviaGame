@@ -1,0 +1,16 @@
+body {
+  padding: 5px;
+  color: white;
+  background-color: black;
+  background-image: url(https://www.greenmangaming.com/newsroom/wp-content/uploads/2019/04/Witchernetflix.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: 20% 50%;
+}
+
+h1 {
+  padding: 35px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-weight: 700;
+  text-align: center;
+}
