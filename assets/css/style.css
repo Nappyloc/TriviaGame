@@ -6,11 +6,23 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: 10% 70%;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-weight: 700;
 }
 
 h1 {
   padding: 35px;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  font-weight: 700;
   text-align: center;
+}
+#game {
+  margin-left: 800px;
+}
+
+#timer {
+  margin-left: 800px;
+  font-weight: 800;
+}
+#start {
+  margin-left: 500px;
+  color: white;
 }
