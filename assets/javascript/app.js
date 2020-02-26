@@ -7,38 +7,27 @@ var timer;
 var gameQuestions = [
     {
         question: "Where is Geralt from?",
-        choices: {
-            a: "Rivia",
-            b: "Winterfel",
-            C: "Norvasgard"
-        },
+        choices: [
+            "Rivia", "Winterfel", "Norvasgard"
+        ],
         rightAnswer: "Rivia"
     },
     {
         question: "What do Witchers Hunt?",
-        choices: {
-            a: "Boar",
-            b: "Elves",
-            c: "Monsters"
-        },
+        choices: [ "Boar", "Elves", "Monsters"
+        ],
         rightAnswer: "Monsters"
     },
     {
         question: "What kind of surprise does Geralt recieve?",
-        choices: {
-            a: "Cake",
-            b: "Sword",
-            c: "Child"
-        },
+        choices: [ "Cake", "Sword", "Child"
+        ],
         rightAnswer: "Child"
     },
     {
         question: 'Who is Geralts love interest?',
-        choices: {
-            a: "Yennefer",
-            b: "Daisy",
-            c: "Cerce"
-        },
+        choices: [ "Yennefer", "Daisy", "Cerce"
+        ],
         rightAnswer: "Yennefer"
     },
 
@@ -51,9 +40,10 @@ var gameQuestions = [
 $( "#start" ).on( "click", function ()
 {
     $( '#start' ).hide();
-    loadGame();
+    loadQuestions();
     timer = setInterval( countDown, 1000 );
     countDown();
+
 
 } )
 
@@ -70,18 +60,29 @@ function countDown ()
         timer = clearInterval()
         $( '#timer' ).html( 'Time is up!' )
 
+
     }
 }
 
 
 
-function loadGame ()
+// function loadGame ()
+// {
+//     for ( var i = 0; i < gameQuestions.length; i++ )
+//         $( "#game" ).append( '<h3>' + gameQuestions[ i ].question + '</h3>' );
+//     console.log( gameQuestions[ i ] );
+
+
+
+// }
+
+function displayResults ()
 {
-    for ( var i = 0; i < gameQuestions.length; i++ )
-        $( "#game" ).append( '<h3>' + gameQuestions[ i ].question + '</h3>' );
-    console.log( gameQuestions[ i ] );
+    var answered = $( '<p>' ).text( 'Total answered questions: ' + totalAnswers )
+    var right = $( '<p>' ).text( 'Total Correct: ' + correctAnswers )
+    var wrong = $( '<p>' ).text( 'Total Wrong: ' + wrongAnswers )
 
-
+    $( '#game' ).append( answered, right, wrong );
 
 }
 
@@ -89,11 +90,44 @@ function loadGame ()
 
 
 
-// function loadQuestions ()
-// {
-//     for ( var i = 0; i < gameQuestions.length; i++ )
-//         $( "#game" ).append( '<h3>' + gameQuestions[ i ].question + '</h3>' );
-//     for ( var c = 0; c < gameQuestions[ c ].choices.length; c++ )
-//         $( "#game" ).append( "<input type='radio' value='" + gameQuestions[ i ].choices[ c ] + "'> " + gameQuestions[ i ].choices[ c ] );
-//     console.log( gameQuestions[ c ].choices );
-// }
+function loadQuestions ()
+{
+    for ( var i = 0; i < gameQuestions.length; i++ )
+    {
+
+
+        $( "#game" ).append( '<h3>' + gameQuestions[ i ].question + '</h3>' );
+
+        for ( var c = 0; c < gameQuestions[ i ].choices.length; c++ )
+        {
+            $( "#game" ).append( "<input type='radio' name=" + i + " value='" + gameQuestions[ i ].choices[ c ] + "'> " + gameQuestions[ i ].choices[ c ] );
+            console.log( gameQuestions[ i ].choices );
+        }
+
+    }
+
+
+}
+
+function calculateScore ()
+{
+    for ( var i = 0; i < gameQuestions.length; i++ )
+    {
+
+
+        var picks = $( `[name="${ i }"]` )
+        for ( var p = 0; p < picks.length; p++ )
+        {
+            if ( picks[ p ].checked === true )
+            {
+                if ( picks[ p ].value === gameQuestions[ i ].rightAnswer )
+                    correctAnswers++;
+            }
+        }
+
+
+
+
+
+    }
+}
