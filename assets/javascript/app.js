@@ -1,8 +1,7 @@
 
 var wrongAnswers = 0;
 var correctAnswers = 0;
-var totalAnswers = 0;
-var counter = 45;
+var counter = 5;
 var timer;
 var gameQuestions = [
     {
@@ -30,65 +29,78 @@ var gameQuestions = [
         ],
         rightAnswer: "Yennefer"
     },
+    {
+        question: 'Where is the island of the Mage?',
+        choices: [ "Dead", "Aritouza", "The Seven"
+        ],
+        rightAnswer: "Aritouza"
+    },
+    {
+        question: 'Who is Ciris Grandmother?',
+        choices: [ "Queen Dragons", "Princess Freya", "Queen Calanthe"
+        ],
+        rightAnswer: "Queen Calanthe"
+    },
+    {
+        question: 'Where is Yennefer from?',
+        choices: [ "Aedirn", "Vengerberg", "Nexus"
+        ],
+        rightAnswer: "Vengerberg"
+    },
+    {
+        question: 'Where did the battle take place?',
+        choices: [ "Sodden Hill", "Prestonpass", "Collodin"
+        ],
+        rightAnswer: "VSodden Hill"
+    },
 
 ]
 
 
 
 
-
+// Start button function
 $( "#start" ).on( "click", function ()
 {
     $( '#start' ).hide();
-    loadQuestions();
     timer = setInterval( countDown, 1000 );
+    loadQuestions();
     countDown();
 
 
+} )
+
+// Submit button function
+
+$( '.done' ).on( 'click', function () 
+{
+    $( '#game' ).hide();
+    displayResults();
 } )
 
 
 
 
 
+// Timer function
 function countDown ()
 {
+
     counter--;
     $( '#timer' ).html( 'You have ' + counter + ' seconds left!' )
     if ( counter <= 0 )
     {
-        timer = clearInterval()
+        clearInterval( counter )
         $( '#timer' ).html( 'Time is up!' )
 
 
     }
-}
 
-
-
-// function loadGame ()
-// {
-//     for ( var i = 0; i < gameQuestions.length; i++ )
-//         $( "#game" ).append( '<h3>' + gameQuestions[ i ].question + '</h3>' );
-//     console.log( gameQuestions[ i ] );
-
-
-
-// }
-
-function displayResults ()
-{
-    var answered = $( '<p>' ).text( 'Total answered questions: ' + totalAnswers )
-    var right = $( '<p>' ).text( 'Total Correct: ' + correctAnswers )
-    var wrong = $( '<p>' ).text( 'Total Wrong: ' + wrongAnswers )
-
-    $( '#game' ).append( answered, right, wrong );
 
 }
 
 
-
-
+// function to load the game question and answers
 
 function loadQuestions ()
 {
@@ -105,16 +117,42 @@ function loadQuestions ()
         }
 
     }
+    var submit = $( '<button>' ).text( 'submit' )
+    submit.addClass( "done btn" );
+    $( '#game' ).append( submit );
 
 
 }
 
-function calculateScore ()
+// Function to display the results
+
+function displayResults ()
 {
+    calculateScore();
+    var right = $( '<p>' ).text( 'Total Correct: ' + correctAnswers )
+    var wrong = $( '<p>' ).text( 'Total Wrong: ' + wrongAnswers )
+
+    $( '#results' ).append( right, wrong );
+
+    var reset = $( '<button>' )
+    reset.addClass( 'btn done' )
+    $( '#results' ).append( reset );
+
+}
+
+
+
+
+
+
+// Function to calculate the score
+
+function calculateScore ()
+{   // Loop through the questions
     for ( var i = 0; i < gameQuestions.length; i++ )
     {
 
-
+        // Loop through the user choices
         var picks = $( `[name="${ i }"]` )
         for ( var p = 0; p < picks.length; p++ )
         {
@@ -124,10 +162,29 @@ function calculateScore ()
                     correctAnswers++;
             }
         }
-
+        wrongAnswers = 8 - correctAnswers
 
 
 
 
     }
+
 }
+
+// Play again Function
+
+function reset ()
+{
+    wrongAnswers = 0;
+    correctAnswers = 0;
+    counter = 45;
+    $( '#start' ).show();
+
+}
+
+
+
+
+
+
+
