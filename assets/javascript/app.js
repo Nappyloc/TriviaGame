@@ -1,7 +1,7 @@
 
 var wrongAnswers = 0;
 var correctAnswers = 0;
-var counter = 5;
+var counter = 45;
 var timer;
 var gameQuestions = [
     {
@@ -51,7 +51,7 @@ var gameQuestions = [
         question: 'Where did the battle take place?',
         choices: [ "Sodden Hill", "Prestonpass", "Collodin"
         ],
-        rightAnswer: "VSodden Hill"
+        rightAnswer: "Sodden Hill"
     },
 
 ]
@@ -72,10 +72,16 @@ $( "#start" ).on( "click", function ()
 
 // Submit button function
 
-$( '.done' ).on( 'click', function () 
+$( '#results' ).on( 'click', function () 
 {
-    $( '#game' ).hide();
+    $( "#game" ).hide();
     displayResults();
+} )
+
+// restart game function
+$( ".done" ).on( 'click', function ()
+{
+    reset();
 } )
 
 
@@ -90,8 +96,9 @@ function countDown ()
     $( '#timer' ).html( 'You have ' + counter + ' seconds left!' )
     if ( counter <= 0 )
     {
-        clearInterval( counter )
+        clearInterval( timer )
         $( '#timer' ).html( 'Time is up!' )
+        displayResults()
 
 
     }
@@ -117,9 +124,11 @@ function loadQuestions ()
         }
 
     }
+    var butDiv = $( '<div id="buttonDiv">' )
     var submit = $( '<button>' ).text( 'submit' )
     submit.addClass( "done btn" );
-    $( '#game' ).append( submit );
+    butDiv.append( submit )
+    $( '#game' ).append( butDiv );
 
 
 }
@@ -129,14 +138,22 @@ function loadQuestions ()
 function displayResults ()
 {
     calculateScore();
+    $( '#timer' ).hide()
+    var results = $( '<div id = "results">' )
     var right = $( '<p>' ).text( 'Total Correct: ' + correctAnswers )
     var wrong = $( '<p>' ).text( 'Total Wrong: ' + wrongAnswers )
-
-    $( '#results' ).append( right, wrong );
-
-    var reset = $( '<button>' )
+    var reset = $( '<button>' ).text( 'Restart Game' );
     reset.addClass( 'btn done' )
-    $( '#results' ).append( reset );
+    results.append( right, wrong, reset );
+    $( '#game' ).replaceWith( results );
+
+
+
+
+
+
+
+
 
 }
 

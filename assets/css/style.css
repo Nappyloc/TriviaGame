@@ -15,14 +15,25 @@ h1 {
   text-align: center;
 }
 #game {
-  margin-left: 800px;
+  margin-left: 700px;
+  line-height: 1.6;
+  background-color: beige;
+  color: black;
+}
+#results {
+  margin-left: 700px;
+  line-height: 1.6;
 }
 
 #timer {
-  margin-left: 800px;
+  margin-left: 700px;
   font-weight: 800;
 }
 #start {
   margin-left: 500px;
   color: white;
+}
+input {
+  padding: 2px;
+  
 }
