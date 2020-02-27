@@ -1,7 +1,8 @@
 
 var wrongAnswers = 0;
+var unanswered = 0;
 var correctAnswers = 0;
-var counter = 45;
+var counter = 30;
 var timer;
 var gameQuestions = [
     {
@@ -57,8 +58,6 @@ var gameQuestions = [
 ]
 
 
-
-
 // Start button function
 $( "#start" ).on( "click", function ()
 {
@@ -69,16 +68,6 @@ $( "#start" ).on( "click", function ()
 
 
 } )
-
-// Submit button function
-
-
-
-// restart game function
-
-
-
-
 
 
 // Timer function
@@ -116,6 +105,8 @@ function loadQuestions ()
             console.log( gameQuestions[ i ].choices );
         }
 
+
+
     }
     var butDiv = $( '<div id="buttonDiv">' )
     var submit = $( '<button>' ).text( 'submit' )
@@ -138,12 +129,16 @@ function displayResults ()
 {
     calculateScore();
     $( '#timer' ).hide()
+
     var results = $( '<div id = "results">' )
     var right = $( '<p>' ).text( 'Total Correct: ' + correctAnswers )
     var wrong = $( '<p>' ).text( 'Total Wrong: ' + wrongAnswers )
+    var undone = $( '<p>' ).text( 'Total Unanswered: ' + unanswered )
     var set = $( '<button>' ).text( 'Restart Game' );
     set.addClass( 'btn done' )
-    results.append( right, wrong, set );
+    results.append( right, wrong, undone, set );
+
+
     $( '#game' ).replaceWith( results );
     $( '#results' ).on( 'click', function () 
     {
@@ -173,8 +168,15 @@ function calculateScore ()
                 if ( picks[ p ].value === gameQuestions[ i ].rightAnswer )
                     correctAnswers++;
             }
+
+            if ( picks[ p ].checked === true )
+            {
+                if ( picks[ p ].value !== gameQuestions[ i ].rightAnswer )
+                    wrongAnswers++;
+            }
         }
-        wrongAnswers = 8 - correctAnswers
+        var totalAnswered = wrongAnswers + correctAnswers
+        unanswered = 8 - totalAnswered
 
 
 
@@ -189,7 +191,8 @@ function reset ()
 {
     wrongAnswers = 0;
     correctAnswers = 0;
-    counter = 45;
+    unanswered = 0;
+    counter = 30;
 
     timer = setInterval( countDown, 1000 );
     $( "#timer" ).show()
