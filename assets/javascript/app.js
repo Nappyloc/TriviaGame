@@ -72,17 +72,10 @@ $( "#start" ).on( "click", function ()
 
 // Submit button function
 
-$( '#results' ).on( 'click', function () 
-{
-    $( "#game" ).hide();
-    displayResults();
-} )
+
 
 // restart game function
-$( ".done" ).on( 'click', function ()
-{
-    reset();
-} )
+
 
 
 
@@ -129,6 +122,12 @@ function loadQuestions ()
     submit.addClass( "done btn" );
     butDiv.append( submit )
     $( '#game' ).append( butDiv );
+    $( ".done" ).on( 'click', function ()
+    {
+        clearInterval( timer )
+        displayResults()
+
+    } )
 
 
 }
@@ -142,18 +141,14 @@ function displayResults ()
     var results = $( '<div id = "results">' )
     var right = $( '<p>' ).text( 'Total Correct: ' + correctAnswers )
     var wrong = $( '<p>' ).text( 'Total Wrong: ' + wrongAnswers )
-    var reset = $( '<button>' ).text( 'Restart Game' );
-    reset.addClass( 'btn done' )
-    results.append( right, wrong, reset );
+    var set = $( '<button>' ).text( 'Restart Game' );
+    set.addClass( 'btn done' )
+    results.append( right, wrong, set );
     $( '#game' ).replaceWith( results );
-
-
-
-
-
-
-
-
+    $( '#results' ).on( 'click', function () 
+    {
+        reset()
+    } )
 
 }
 
@@ -195,7 +190,12 @@ function reset ()
     wrongAnswers = 0;
     correctAnswers = 0;
     counter = 45;
-    $( '#start' ).show();
+
+    timer = setInterval( countDown, 1000 );
+    $( "#timer" ).show()
+    var newGame = $( "<div id='game'>" )
+    $( '#results' ).replaceWith( newGame );
+    loadQuestions()
 
 }
 
